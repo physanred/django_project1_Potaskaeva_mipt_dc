@@ -1,0 +1,55 @@
+
+<p align="left" font-size="14pt"><a href="{% url 'biopsyclassification:index' %}" >Домашняя страница</a></p>
+<p align="left" font-size="14pt"><a href="{% url 'predict' %}">Нейросеть</a></p>
+{% block sidebar %} <ul class="sidebar-nav">
+    {% if user.is_authenticated %}
+    <li align="left">Пользователь: {{ user.get_username }}</li>
+    
+    <form method="post" action="{% url 'logout' %}" align="left">
+        {% csrf_token %}
+        <button type="submit" align="left">Выйти</button>
+    </form>
+    
+    {% else %}
+    <li align="left"><a href="{% url 'login'%}?next={{request.path}}">Войти в систему</a></li>
+    {% endif %}
+  </ul>{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>Гистологическая классификация рака почки</title>
+    <style>
+        body {
+            background-color: #EDE8E0;
+            text-align: center;
+        }
+        p {
+            color: #4D473A;
+            font-family: Georgia, serif;
+            font-size: 14pt;
+        }
+        input[type=button], input[type=submit], input[type=reset] {
+        background-color: #cfdcda;
+        border: none;
+        color:  #cfdcda;
+        padding: 12px 30px;
+        text-decoration: none;
+        font-family: Georgia, serif;
+        font-size: 16pt;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+         
+    </style>
+</head>
+
+
+<body>
+   
+    <p>Гистологическая классификация рака почки по слайдам хирургической резекции</p>
+    
+</body>
+</html>
+{% endblock %}
