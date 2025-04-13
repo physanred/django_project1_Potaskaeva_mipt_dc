@@ -1,0 +1,125 @@
+{% extends "biopsyclassification.html" %}
+{% block content %}
+<style>
+    body {
+        background-color: #EDE8E0;
+        text-align: center;
+        font-family: Georgia, serif;
+        font-size: 16pt;
+    }
+    p {
+        color: #4D473A;
+        text-align: center;
+        font-family: Georgia, serif;
+        font-size: 14pt;
+    }
+    td {
+        color: #4D473A;
+        text-align: center;
+        font-family: Georgia, serif;
+        font-size: 14pt;
+    }
+    form {
+            color: #4D473A;
+            text-align: center;
+            font-family: Georgia, serif;
+            font-size: 16pt;
+            
+    }
+    input[type=button], input[type=submit], input[type=reset] {
+        background-color: #cfdcda;
+        border: none;
+        color: green;
+        padding: 12px 30px;
+        text-decoration: none;
+        font-family: Georgia, serif;
+        font-size: 16pt;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .myform {
+        font-family: Georgia, serif;
+        font-size: 12pt;
+    }
+    .four {
+  padding: 50px 20px;
+  text-align: center;
+} 
+.four h1 {
+  font-family: 'Merriweather', serif;
+  position: relative;
+  color: #4D473A;
+  font-size: 50px;
+  font-weight: normal;
+  padding: 8px 20px 7px 20px;
+  border-top: 4px solid;
+  border-left: 4px solid;
+  display: inline-block;
+  margin: 0;
+  line-height: 1;
+}
+.four h1:before {
+  content: ""; 
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: -28px;
+  left: -28px;
+  border: 4px solid #4D473A;
+  box-sizing: border-box;
+}
+@media (max-width: 450px) {
+  .four h1 {font-size: 16px;}
+  .four h1:before {
+    width: 20px;
+    height: 20px;
+    top: -20px;
+    left: -20px;
+  }
+}
+</style>
+<body>
+    <div class="four"><h1>Регистрация пользователя</h1></div>
+
+
+{% if form.errors %}
+  <p>Ваше имя пользователя и пароль не найдены. Попытайтесь снова.</p>
+{% endif %}
+
+{% if next %}
+  {% if user.is_authenticated %}
+    <p>Ваш аккаунт не имеет доступа к этой странице. Для доступа,
+    пожалуйста, войдите с аккаунта, у которого есть доступ.</p>
+  {% else %}
+    <p>Пожалуйста, войдите для просмотра.</p>
+  {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}" >
+{% csrf_token %}
+<table align="center"  cellspacing="10">
+
+<tr bgcolor="#DCCFD1">
+  <td>Имя пользователя:</td>
+  <td bgcolor="#f4f0f1" abbr="Имя пользователя" >{{ form.username }}</td>
+</tr>
+
+<tr bgcolor="#DCCFD1">
+  <td >Пароль:</td>
+  <td bgcolor="#f4f0f1" abbr="Пароль" >{{ form.password }}</td>
+</tr>
+</table>
+
+<input type="submit" value="Войти" />
+<label>
+    <input type="checkbox" name="remember"> Запомнить
+</label>
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{# Assumes you setup the password_reset view in your URLconf #}
+<p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+
+
+</body>
+{% endblock %}
